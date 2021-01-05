@@ -1,6 +1,6 @@
 # Quasar TipTap Demo (quasar-tiptap-demo)
 
-A Quasar Framework app
+A rich editor component using Quasar framework and quasar-tiptap
 
 ## Install the dependencies
 ```bash
@@ -20,3 +20,10 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+
+
+### Other required packages
+```
+tiptap
+tiptap-extensions
+```
