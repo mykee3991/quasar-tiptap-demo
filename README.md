@@ -1,6 +1,6 @@
 # Quasar TipTap Demo (quasar-tiptap-demo)
 
-A rich editor component using Quasar framework and quasar-tiptap (https://donotebase.github.io/quasar-tiptap/)
+A rich text editor component using Quasar framework and quasar-tiptap (https://donotebase.github.io/quasar-tiptap/)
 
 ## Install the dependencies
 ```bash
