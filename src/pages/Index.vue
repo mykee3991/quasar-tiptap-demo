@@ -2,28 +2,32 @@
   <div class="page-quasar-tiptap-basic">
     <quasar-tiptap
       ref="editor"
-      v-bind="state.options"
-      @update="methods.onUpdate"
+      v-bind="options"
+      @update="onUpdate"
     >
       <template slot="toolbar-left">
         <o-menubar-btn
           icon="preview"
           tooltip="Preview"
-          @click.native="state.preview = true"
+          @click.native="preview = true"
         />
       </template>
     </quasar-tiptap>
-    <q-dialog v-model="state.preview" maximized>
+    <q-dialog v-model="preview" maximized>
       <q-card>
         <q-bar class="bg-transparent">
           <div class="col">
             Preview
           </div>
-          <q-btn dense flat round icon="close" size="8.5px" color="grey" v-close-popup />
+          <q-btn dense flat round icon="close" size="8.5px" color="grey" v-close-popup >
+            <q-tooltip>
+              Close
+            </q-tooltip>
+          </q-btn>
         </q-bar>
         <q-card-section class="row items-center">
           <div class="tiptap">
-            <div class="editor__content" v-html="state.html"></div>
+            <div class="editor__content" v-html="html"></div>
           </div>
         </q-card-section>
       </q-card>
@@ -36,8 +40,7 @@ import {
   defineComponent,
   ref,
   reactive,
-  onMounted,
-  watch,
+  toRefs,
 } from "@vue/composition-api";
 import { State, Method } from "components/models.ts";
 import { Placeholder } from "tiptap-extensions";
@@ -53,7 +56,7 @@ import "quasar-tiptap/lib/index.css";
 
 export default defineComponent({
   name: "SimpleEditorComponent",
-  setup(_, { root, emit }: { root: any; emit: any }) {
+  setup(_, { root, emit }: any) {
     const data: State = {
       subject: "",
       options: {
@@ -129,30 +132,14 @@ export default defineComponent({
       getJSON: any;
       getHTML: any;
     }) => {
-      console.log(getHTML())
       data.json = getJSON();
       data.html = getHTML();
     };
 
-    methods.initContent = (content: string, subject: string = "") => {
-      data.options.content = content;
-      if (subject) {
-        data.subject = subject;
-      }
-    };
-    methods.editMode = (value: boolean) => {
-      data.options.editable = value;
-      data.options.showToolbar = value;
-      data.options.showBubble = value;
-    };
-
     data.preview = false
-    methods.preview = () => {
-      // emit("preview", { content: data.html, subject: data.subject });
-    };
 
     const state = reactive(data);
-    return { state, methods };
+    return { ...toRefs(state), onUpdate: methods.onUpdate };
   },
   components: {
     QuasarTiptap,
